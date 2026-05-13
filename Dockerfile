@@ -1,34 +1,14 @@
 
-# Stage 1: Build the frontend, and install server dependencies
+# Stage 1: Build the Vite app
 FROM node:22 AS builder
-
 WORKDIR /app
+COPY . .
+RUN npm install && npm run build
 
-# Copy all files from the current directory
-COPY . ./
-RUN echo "API_KEY=PLACEHOLDER" > ./.env
-RUN echo "GEMINI_API_KEY=PLACEHOLDER" >> ./.env
-
-# Install server dependencies
-WORKDIR /app/server
-RUN npm install
-
-# Install dependencies and build the frontend
-WORKDIR /app
-RUN mkdir dist
-RUN bash -c 'if [ -f package.json ]; then npm install && npm run build; fi'
-
-
-# Stage 2: Build the final server image
+# Stage 2: Serve static files
 FROM node:22
-
 WORKDIR /app
-
-#Copy server files
-COPY --from=builder /app/server .
-# Copy built frontend assets from the builder stage
+RUN npm install -g serve
 COPY --from=builder /app/dist ./dist
-
 EXPOSE 3000
-
-CMD ["node", "server.js"]
+CMD ["serve", "-s", "dist", "-l", "3000"]
