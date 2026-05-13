@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Vite type declaration for CSS modules */
+/// <reference types="vite/client" />
