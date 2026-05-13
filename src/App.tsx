@@ -129,6 +129,11 @@ export default function App() {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Media Upload</h1>
           <p className="text-purple-300">Drop or select your audio &amp; video files to upload</p>
+          <div className="mt-3 inline-flex items-center gap-3 bg-white/10 backdrop-blur rounded-full px-5 py-2 border border-white/10">
+            <span className="text-purple-300 text-sm">User:</span>
+            <span className="text-white text-sm font-semibold">{user_name}</span>
+            <span className="text-purple-500 text-xs">ID: {user_id}</span>
+          </div>
         </div>
 
         {/* Drop Zone */}
